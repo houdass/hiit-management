@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'theme/theme.scss';
+@import 'theme/typography.scss';
+@import '~ngx-toastr/toastr.css';
+.toast-container {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
