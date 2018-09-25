@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { AuthService } from '../../core/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { LoginService } from '../../core/services/login.service';
+import { fade } from '../../app.animations';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [fade]
 })
 export class LoginComponent implements OnInit {
+  isLoginMode = true;
   userForm: FormGroup;
   formErrors = {
     email: '',
@@ -30,6 +34,14 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {}
 
   ngOnInit() {
+    console.log(this.loginService.authState);
+    this.loginService.getAuthState().subscribe((auth: any) => {
+      if (auth) {
+        console.log(auth);
+        this.router.navigate(['content', 'dashboard']);
+      }
+    });
+
     this.buildForm();
   }
 
@@ -53,7 +65,7 @@ export class LoginComponent implements OnInit {
   onValueChanged(data?: any) {
     // if (!this.userForm) {
     //   return;
-    // }
+    // }b
     // const form = this.userForm;
     // for (const field in this.formErrors) {
     //   if (Object.prototype.hasOwnProperty.call(this.formErrors, field)) {
@@ -70,8 +82,12 @@ export class LoginComponent implements OnInit {
     //   }
     // }
   }
-  login() {
-    this.router.navigate(['/']);
-    this.loginService.signUp('youness@gmail.com', '123456');
+
+  signIn() {
+    this.loginService.signIn(this.userForm.value.email, this.userForm.value.password);
+  }
+
+  signUp() {
+    this.loginService.signUp(this.userForm.value.email, this.userForm.value.password);
   }
 }

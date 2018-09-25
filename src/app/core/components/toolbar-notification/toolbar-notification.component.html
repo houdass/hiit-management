@@ -1,5 +1,6 @@
 <div class="toolbar-notification-container">
-  <button mat-icon-button (click)="isOpen = !isOpen;" [ngClass]="[cssPrefix+'-btn']" [class.open]="isOpen">
+  <button mat-icon-button (click)="isOpen = !isOpen;" [ngClass]="[cssPrefix+'-btn']" [class.open]="isOpen"
+          matTooltip="Notifications">
       <mat-icon>notifications_none</mat-icon>
       <span class="badge" *ngIf="notifications && notifications?.length !== 0">{{ notifications?.length }}</span>
   </button>

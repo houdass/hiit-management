@@ -1,3 +1,4 @@
 export enum Collection {
-  USER = '/users'
+  User = '/users',
+  AllowedUser = '/allowed-user'
 }

@@ -29,6 +29,18 @@ $prefix: 'sigin';
 
 .redirect {
   font-size: 14px;
-  margin-left: 10px;
+  margin-left: 76px;
   color: #00aaaa;
+  cursor: pointer;
+  text-align: right;
+}
+
+.form {
+  background-image:url('../../../assets/login.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  .layout {
+    width: 30%;
+  }
 }

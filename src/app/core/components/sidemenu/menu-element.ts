@@ -13,7 +13,7 @@ export const menus = [
     sub: [
       {
         name: 'Liste des employées',
-        link: '/employees-list',
+        link: '/content/employees-list',
         icon: 'view_list',
         chip: false,
         open: true

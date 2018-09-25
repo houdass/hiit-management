@@ -5,13 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Collection } from '../enums/collection.enum';
 import { DataService } from './data.service';
-import { User } from '../models/user.model';
+import { AllowedUser } from '../models/allowedUser.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends DataService<User> {
+export class AllowedUserService extends DataService<AllowedUser> {
   constructor(afDb: AngularFireDatabase, afAuth: AngularFireAuth, toastrService: ToastrService) {
-    super(afDb, afAuth, toastrService, Collection.User);
+    super(afDb, afAuth, toastrService, Collection.AllowedUser);
   }
 }

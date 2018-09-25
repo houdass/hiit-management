@@ -11,8 +11,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ContentModule } from './pages/content/content.module';
-import { LoginModule } from './pages/login/login.module';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginModule } from './pages/login/login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,9 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AppRoutingModule,
-    ContentModule,
     LoginModule,
+    AppRoutingModule,
     ToastrModule.forRoot()
   ],
   providers: [],

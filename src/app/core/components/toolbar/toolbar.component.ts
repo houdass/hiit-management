@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ToolbarHelpers } from './toolbar.helpers';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,5 +23,9 @@ export class ToolbarComponent {
   searchOpen = false;
   toolbarHelpers = ToolbarHelpers;
 
-  constructor() {}
+  constructor(private loginService: LoginService) {}
+
+  signOut() {
+    this.loginService.signOut();
+  }
 }

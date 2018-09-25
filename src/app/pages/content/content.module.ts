@@ -28,11 +28,6 @@ import { CoreModule } from '../../core/core.module';
         component: ContentComponent,
         children: [
           {
-            path: '',
-            redirectTo: 'dashboard',
-            pathMatch: 'full'
-          },
-          {
             path: 'dashboard',
             loadChildren: '../dashboard/dashboard-crm.module#DashboardCrmModule'
           },

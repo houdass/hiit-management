@@ -11,6 +11,7 @@
     <button  mat-icon-button (click)="searchOpen = !searchOpen" fxHide="true" [fxHide.gt-xs]="false">
         <i class="material-icons">search</i>
     </button>
+
     <app-search-bar [open]="searchOpen"></app-search-bar>
 
     <app-fullscreen></app-fullscreen>
@@ -18,6 +19,10 @@
     <app-toolbar-notification [notifications]="toolbarHelpers?.notifications"></app-toolbar-notification>
 
     <app-user-menu [currentUser]="toolbarHelpers?.currentUser"></app-user-menu>
+
+    <button mat-icon-button (click)="signOut()" matTooltip="Se déconnecter">
+      <mat-icon>power_off</mat-icon>
+    </button>
 
      <button mat-icon-button (click)="sidebar.toggle();">
         <i class="material-icons app-toolbar-menu">menu </i>

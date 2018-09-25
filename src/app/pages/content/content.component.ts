@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { fadeAnimation, routerTransition } from './animations';
+import { routerTransition } from '../../app.animations';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

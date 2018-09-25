@@ -2,8 +2,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-  /* { path: '', loadChildren: './pages/content/content.module#ContentModule' },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginModule' } */
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'content',
+    loadChildren: './pages/content/content.module#ContentModule'
+  }
 ];
 
 @NgModule({

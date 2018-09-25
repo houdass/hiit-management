@@ -1,12 +1,10 @@
-import { fromEvent as observableFromEvent, Observable } from 'rxjs';
-
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ExampleDatabase } from './helpers.data';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { AllowedUserService } from '../../services/allowedUser.service';
+import { AllowedUser } from '../../models/allowedUser.model';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { merge, of } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -14,11 +12,8 @@ import { User } from '../../models/user.model';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  showNavListCode;
-  displayedColumns = ['id', 'lastname', 'firstname', 'category', 'integrationDate', 'actions'];
-  exampleDatabase = new ExampleDatabase();
-  selection = new SelectionModel<string>(true, []);
-  dataSource: MatTableDataSource<User> | null;
+  displayedColumns: string[] = ['id', 'email'];
+  dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -26,65 +21,60 @@ export class TableComponent implements OnInit {
   sort: MatSort;
   @ViewChild('filter')
   filter: ElementRef;
+  isLoadingResults = true;
+  resultsLength = 0;
+  data = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private allowedUserService: AllowedUserService) {}
 
   ngOnInit() {
-    // this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    this.userService.getAll().subscribe(users => {
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.allowedUserService.getAll();
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.resultsLength = data.length;
+
+          return data;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          return of([]);
+        })
+      )
+      .subscribe(data => (this.data = data));
+
+    this.allowedUserService.getAll().subscribe(users => {
       console.log(users);
       this.dataSource = new MatTableDataSource(users);
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
     });
-    observableFromEvent(this.filter.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged()
-      )
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
   }
 
-  isAllSelected(): boolean {
-    if (!this.dataSource) {
-      return false;
-    }
-    if (this.selection.isEmpty()) {
-      return false;
-    }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.filter.nativeElement.value) {
-      return this.selection.selected.length === this.dataSource.data.length;
-    } else {
-      return this.selection.selected.length === this.exampleDatabase.data.length;
-    }
-  }
-
-  masterToggle() {
-    if (!this.dataSource) {
-      return;
-    }
-
-    if (this.isAllSelected()) {
-      this.selection.clear();
-    } else if (this.filter.nativeElement.value) {
-      this.dataSource.data.forEach(data => this.selection.select(data.id));
-    } else {
-      this.exampleDatabase.data.forEach(data => this.selection.select(data.id));
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 
   addUser() {
-    const user = new User('Youness', 'hou', 'barca', new Date().toString(), '1');
-    this.userService.addUser(user);
+    const user = new AllowedUser(1, 'houd.youness@gmail.com');
+    this.allowedUserService.add(user);
   }
 
   removeUser(key) {
-    this.userService.removeUser(key);
+    this.allowedUserService.remove(key);
   }
 }

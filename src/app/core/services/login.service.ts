@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-
-import { UserService } from './user.service';
-import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +8,7 @@ import { User } from '../models/user.model';
 export class LoginService {
   authState: any = null;
 
-  constructor(private afDb: AngularFireDatabase, private afAuth: AngularFireAuth, private userService: UserService) {
+  constructor(private afAuth: AngularFireAuth, private router: Router) {
     this.afAuth.authState.subscribe((auth: any) => {
       this.authState = auth;
     });
@@ -29,8 +25,6 @@ export class LoginService {
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
-        const user = new User('1Kuuozozeqkqlaeh', 'Youness', 'Houdass', '44', 'BLUE');
-        this.userService.addUser(user);
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -39,14 +33,15 @@ export class LoginService {
 
   signOut(): any {
     this.afAuth.auth.signOut();
-  }
-
-  getEmployees(): Observable<any> {
-    return this.afDb.list('/users').snapshotChanges();
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
     return this.authState !== null;
+  }
+
+  getAuthState() {
+    return this.afAuth.authState;
   }
 
   currentUser(): any {
@@ -55,5 +50,9 @@ export class LoginService {
 
   currentUserEmail(): any {
     return this.isAuthenticated ? this.authState.email : null;
+  }
+
+  currentUserUid(): any {
+    return this.isAuthenticated ? this.authState.uid : null;
   }
 }
