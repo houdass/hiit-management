@@ -1,10 +1,11 @@
+import { fromEvent as observableFromEvent } from 'rxjs';
+
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
-import { AllowedUserService } from '../../services/allowedUser.service';
-import { AllowedUser } from '../../models/allowedUser.model';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { merge, of } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -12,8 +13,10 @@ import { merge, of } from 'rxjs';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'email'];
-  dataSource: MatTableDataSource<User>;
+  showNavListCode;
+  displayedColumns = ['id', 'lastname', 'firstname', 'category', 'integrationDate', 'actions'];
+  selection = new SelectionModel<string>(true, []);
+  dataSource: MatTableDataSource<User> | null;
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -22,59 +25,50 @@ export class TableComponent implements OnInit {
   @ViewChild('filter')
   filter: ElementRef;
   isLoadingResults = true;
-  resultsLength = 0;
-  data = null;
 
-  constructor(private allowedUserService: AllowedUserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        switchMap(() => {
-          this.isLoadingResults = true;
-          return this.allowedUserService.getAll();
-        }),
-        map(data => {
-          // Flip flag to show that loading has finished.
-          this.isLoadingResults = false;
-          this.resultsLength = data.length;
-
-          return data;
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          return of([]);
-        })
-      )
-      .subscribe(data => (this.data = data));
-
-    this.allowedUserService.getAll().subscribe(users => {
+    this.userService.getAll().subscribe(users => {
       console.log(users);
       this.dataSource = new MatTableDataSource(users);
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-      }
+      this.isLoadingResults = false;
     });
+    observableFromEvent(this.filter.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  isAllSelected(): boolean {
+    if (!this.dataSource) {
+      return false;
+    }
+    if (this.selection.isEmpty()) {
+      return false;
+    }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.filter.nativeElement.value) {
+      return this.selection.selected.length === this.dataSource.data.length;
+    } else {
+      return this.selection.selected.length === this.exampleDatabase.data.length;
     }
   }
 
   addUser() {
-    const user = new AllowedUser(1, 'houd.youness@gmail.com');
-    this.allowedUserService.add(user);
+    const user = new User('Youness', 'hou', 'barca', new Date().toString(), '1');
+    this.userService.add(user);
   }
 
   removeUser(key) {
-    this.allowedUserService.remove(key);
+    this.userService.remove(key);
   }
 }

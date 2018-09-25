@@ -11,8 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   MatCheckboxModule,
   MatPaginatorModule,
+  MatProgressSpinnerModule,
   MatSortModule,
-  MatStepperModule,
   MatTableModule,
   MatTabsModule
 } from '@angular/material';
@@ -67,6 +67,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatToolbarModule,
     MatFormFieldModule,
     MatSidenavModule,
+    MatProgressSpinnerModule,
     MatTabsModule,
     MatSliderModule,
     MatProgressBarModule
