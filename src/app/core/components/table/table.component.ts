@@ -33,6 +33,7 @@ export class TableComponent implements OnInit {
       console.log(users);
       this.dataSource = new MatTableDataSource(users);
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
       this.isLoadingResults = false;
     });
     observableFromEvent(this.filter.nativeElement, 'keyup')
@@ -46,21 +47,6 @@ export class TableComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-  }
-
-  isAllSelected(): boolean {
-    if (!this.dataSource) {
-      return false;
-    }
-    if (this.selection.isEmpty()) {
-      return false;
-    }
-
-    if (this.filter.nativeElement.value) {
-      return this.selection.selected.length === this.dataSource.data.length;
-    } else {
-      return this.selection.selected.length === this.exampleDatabase.data.length;
-    }
   }
 
   addUser() {
