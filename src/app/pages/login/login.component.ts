@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { LoginService } from '../../core/services/login.service';
-import { fade } from '../../app.animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [fade]
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   isLoginMode = true;
@@ -31,10 +29,17 @@ export class LoginComponent implements OnInit {
     }
   };
 
-  constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit() {
-    console.log(this.loginService.authState);
+    this.route.data.subscribe((data: Data) => {
+      this.isLoginMode = data.isLoginMode;
+    });
     this.loginService.getAuthState().subscribe((auth: any) => {
       if (auth) {
         console.log(auth);

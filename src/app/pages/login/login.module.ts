@@ -12,7 +12,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-const routes: Routes = [{ path: 'login', component: LoginComponent }];
+const routes: Routes = [
+  { path: 'login', component: LoginComponent, data: { isLoginMode: true } },
+  { path: 'register', component: LoginComponent, data: { isLoginMode: false } }
+];
 
 @NgModule({
   imports: [
