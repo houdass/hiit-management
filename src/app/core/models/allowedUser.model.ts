@@ -1,3 +1,3 @@
 export class AllowedUser {
-  constructor(public id: number, public email: string) {}
+  constructor(public email: string, public isAdmin: boolean, public isActive: boolean) {}
 }

@@ -8,6 +8,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 import {
   MatCheckboxModule,
   MatPaginatorModule,
@@ -32,6 +34,8 @@ import { FullscreenComponent } from './fullscreen/fullscreen.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { TableComponent } from './table/table.component';
+import { TableDialogComponent } from './table/table.dialog.component';
+import { FormsModule } from '@angular/forms';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -47,7 +51,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FullscreenComponent,
     SidebarComponent,
     UserMenuComponent,
-    TableComponent
+    TableComponent,
+    TableDialogComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +65,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSortModule,
     MatTooltipModule,
     MatIconModule,
+    MatDialogModule,
     MatChipsModule,
+    MatSlideToggleModule,
     RouterModule,
     PerfectScrollbarModule,
     FlexLayoutModule,
@@ -70,7 +77,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSliderModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FormsModule
   ],
   exports: [
     SidemenuComponent,
@@ -83,6 +91,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserMenuComponent,
     TableComponent
   ],
+  entryComponents: [TableDialogComponent],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

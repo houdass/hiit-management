@@ -38,6 +38,11 @@ export class DataService<T> {
     this.toastrService.success(`L'utilisateur a été ajouté avec succès`);
   }
 
+  addWithKey(key: string, item: T) {
+    this.afDb.list(`${this.dbName}/${key}`).push(item);
+    this.toastrService.success(`L'utilisateur a été ajouté avec succès`);
+  }
+
   update(key: string, item: T) {
     this.db.update(key, item);
     this.toastrService.success(`L'utilisateur a été modifié avec succès`);
