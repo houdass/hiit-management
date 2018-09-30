@@ -1,4 +1,5 @@
 import { Component, Input, HostListener, ElementRef } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-menu',
@@ -23,5 +24,9 @@ export class UserMenuComponent {
     }
   }
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, public authService: AuthService) {}
+
+  signOut() {
+    this.authService.signOut();
+  }
 }

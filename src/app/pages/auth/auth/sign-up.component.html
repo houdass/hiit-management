@@ -1,0 +1,32 @@
+<div fxLayout="column"
+     fxFlexFill fxLayoutAlign="center center"
+     class="form">
+    <div fxLayout="column" class="layout">
+        <div class="mat-elevation-z4">
+            <mat-card>
+                <mat-card-title>Enregistrement
+                    <a class="redirect" routerLink="/sign-in">S'authentifier</a>
+                </mat-card-title>
+                <mat-card-content>
+                    <form fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="userForm">
+                        <mat-form-field class="full-width">
+                          <input type="email" id="email" class="input" placeholder="Veuillez entrer une adresse email valide"
+                                 formControlName="email" required matInput>
+                        </mat-form-field>
+                        <div *ngIf="formErrors.email" class="help is-danger">
+                            {{ formErrors.email }}
+                        </div>
+                        <mat-form-field class="full-width">
+                            <input type="password" id="password" class="input" placeholder="Veuillez entrer votre mot de passe"
+                            formControlName="password" required matInput>
+                        </mat-form-field>
+                        <div *ngIf="formErrors.password" class="help is-danger">
+                            {{ formErrors.password }}
+                        </div>
+                        <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="signUp()">Créer votre compte</button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidemenu-item',
@@ -13,7 +14,7 @@ export class SidemenuItemComponent {
   @Input()
   secondaryMenu = false;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   openLink() {
     this.menu.open = this.menu.open;

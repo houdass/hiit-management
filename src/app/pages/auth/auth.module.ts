@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './login.component';
 import {
   MatCardModule,
   MatButtonModule,
@@ -11,10 +10,25 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './auth/sign-up.component';
+import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, data: { isLoginMode: true } },
-  { path: 'register', component: LoginComponent, data: { isLoginMode: false } }
+  {
+    path: '',
+    component: AuthComponent,
+    children: [
+      {
+        path: 'sign-in',
+        component: SignInComponent
+      },
+      {
+        path: 'sign-up',
+        component: SignUpComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({
@@ -30,8 +44,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginComponent],
+  declarations: [SignInComponent, SignUpComponent, AuthComponent],
   exports: [RouterModule],
   providers: []
 })
-export class LoginModule {}
+export class AuthModule {}

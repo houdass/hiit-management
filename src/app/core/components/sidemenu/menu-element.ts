@@ -3,13 +3,15 @@ export const menus = [
     name: 'Dashboard',
     icon: 'dashboard',
     link: '/dashboard',
-    open: false
+    open: false,
+    admin: false
   },
   {
     name: 'Employées',
     icon: 'supervised_user_circle',
     link: false,
     open: false,
+    admin: true,
     sub: [
       {
         name: 'Liste des employées',

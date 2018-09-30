@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ToolbarHelpers } from './toolbar.helpers';
-import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,9 +12,6 @@ export class ToolbarComponent {
   sidenav;
 
   @Input()
-  sidebar;
-
-  @Input()
   drawer;
 
   @Input()
@@ -23,9 +20,5 @@ export class ToolbarComponent {
   searchOpen = false;
   toolbarHelpers = ToolbarHelpers;
 
-  constructor(private loginService: LoginService) {}
-
-  signOut() {
-    this.loginService.signOut();
-  }
+  constructor(public authService: AuthService) {}
 }

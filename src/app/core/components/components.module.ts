@@ -8,16 +8,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatCheckboxModule, MatSlideToggleModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
-import {
-  MatCheckboxModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule
-} from '@angular/material';
+import { MatProgressSpinnerModule, MatTabsModule } from '@angular/material';
 import { MatSidenavModule, MatSliderModule, MatProgressBarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -29,12 +22,8 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ToolbarNotificationComponent } from './toolbar-notification/toolbar-notification.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FullscreenComponent } from './fullscreen/fullscreen.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
-import { TableComponent } from './table/table.component';
-import { TableDialogComponent } from './table/table.dialog.component';
 import { FormsModule } from '@angular/forms';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -47,22 +36,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SidemenuItemComponent,
     ToolbarNotificationComponent,
     ToolbarComponent,
-    SearchBarComponent,
     FullscreenComponent,
-    SidebarComponent,
-    UserMenuComponent,
-    TableComponent,
-    TableDialogComponent
+    UserMenuComponent
   ],
   imports: [
     CommonModule,
     MatListModule,
     MatButtonModule,
     MatInputModule,
-    MatTableModule,
     MatCheckboxModule,
-    MatPaginatorModule,
-    MatSortModule,
     MatTooltipModule,
     MatIconModule,
     MatDialogModule,
@@ -85,13 +67,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SidemenuItemComponent,
     ToolbarNotificationComponent,
     ToolbarComponent,
-    SearchBarComponent,
     FullscreenComponent,
-    SidebarComponent,
-    UserMenuComponent,
-    TableComponent
+    UserMenuComponent
   ],
-  entryComponents: [TableDialogComponent],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,

@@ -1,0 +1,13 @@
+<form #f="ngForm">
+  <h1 mat-dialog-title>Ajouter un utilisateur</h1>
+  <div mat-dialog-content>
+    <p>Email</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.email" name="email" required email>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Annuler</button>
+    <button mat-button [mat-dialog-close]="data" [disabled]="!f.valid">Créer</button>
+  </div>
+</form>

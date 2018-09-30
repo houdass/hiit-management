@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Collection } from '../enums/collection.enum';
 import { DataService } from './data.service';
 import { User } from '../models/user.model';
-
 @Injectable({
   providedIn: 'root'
 })

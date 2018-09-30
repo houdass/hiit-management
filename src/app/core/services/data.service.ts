@@ -8,10 +8,10 @@ export class DataService<T> {
   authState: firebase.User = null;
 
   constructor(
-    private afDb: AngularFireDatabase,
-    private afAuth: AngularFireAuth,
-    private toastrService: ToastrService,
-    private dbName: string
+    protected afDb: AngularFireDatabase,
+    protected afAuth: AngularFireAuth,
+    protected toastrService: ToastrService,
+    protected dbName: string
   ) {
     this.afAuth.authState.subscribe((auth: firebase.User) => {
       this.authState = auth;
@@ -43,8 +43,8 @@ export class DataService<T> {
     this.toastrService.success(`L'utilisateur a été ajouté avec succès`);
   }
 
-  update(key: string, item: T) {
-    this.db.update(key, item);
+  update(key: string, changes: any) {
+    this.db.update(key, changes);
     this.toastrService.success(`L'utilisateur a été modifié avec succès`);
   }
 

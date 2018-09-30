@@ -18,10 +18,5 @@ export const ToolbarHelpers = {
       lastTime: '23 Minutes ago',
       state: 'state'
     }
-  ],
-
-  currentUser: {
-    photoURL: 'assets/hari.jpg',
-    currentUserName: 'Hari Krishna'
-  }
+  ]
 };

@@ -14,4 +14,8 @@ export class AllowedUserService extends DataService<AllowedUser> {
   constructor(afDb: AngularFireDatabase, afAuth: AngularFireAuth, toastrService: ToastrService) {
     super(afDb, afAuth, toastrService, Collection.AllowedUser);
   }
+
+  setToActive(key) {
+    this.update(key, { isActive: true });
+  }
 }
